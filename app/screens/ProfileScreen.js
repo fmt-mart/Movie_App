@@ -81,12 +81,12 @@ export default function ProfileScreen() {
             width: 100,
             height: 100,
             borderRadius: 50,
-            margin: 30,
+            margin: 20,
           }}
         ></Image>
 
         <View>
-          <Text style={{ fontSize: 40, fontWeight: "bold", color: "white" }}>
+          <Text style={{ fontSize: 30, fontWeight: "bold", color: "white" }}>
             {fullname}
           </Text>
           <Text style={{ fontSize: 15, color: "gray" }}>@{username}</Text>
