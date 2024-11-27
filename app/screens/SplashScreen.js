@@ -1,5 +1,6 @@
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, StyleSheet, StatusBar } from "react-native";
 import { PlayIcon } from "react-native-heroicons/outline";
+
 const SplashScreen = () => {
   const styles = StyleSheet.create({
     container: {
@@ -22,19 +23,19 @@ const SplashScreen = () => {
     },
 
     logo_inside: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        borderWidth: 5, 
-        borderColor: "#000000", 
-        backgroundColor: "#eab308",
-        justifyContent: "center",
-        alignItems: "center",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: [{ translateX: -50 }, { translateY: -50 }],
-    }
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      borderWidth: 5,
+      borderColor: "#000000",
+      backgroundColor: "#eab308",
+      justifyContent: "center",
+      alignItems: "center",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: [{ translateX: -50 }, { translateY: -50 }],
+    },
   });
 
   return (

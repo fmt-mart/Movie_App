@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Platform, StatusBar, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import {
-  ChevronLeftIcon,
-  EyeIcon,
-  EyeSlashIcon,
-} from "react-native-heroicons/outline";
+import { EyeIcon, EyeSlashIcon } from "react-native-heroicons/outline";
+import { user_login } from "../api/user_api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AppContext } from "../components/context";
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +35,7 @@ const styles = StyleSheet.create({
 
 export default SignInScreen = () => {
   const navigation = useNavigation();
+
   useEffect(() => {
     if (Platform.OS === "android") {
       StatusBar.setBackgroundColor("black");
@@ -48,6 +48,7 @@ export default SignInScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const { setData } = useContext(AppContext);
   const handleLogin = async () => {
     console.log("Email:", email);
     console.log("Password:", password);
@@ -57,35 +58,53 @@ export default SignInScreen = () => {
       return;
     }
 
-    try {
-      // Login logic here
-      const response = await fetch("http://10.0.2.2:3000/users");
-      const users = await response.json();
+    // try {
+    //   // Login logic here
+    //   const response = await fetch("http://10.0.2.2:3000/users");
+    //   const users = await response.json();
 
-      //Tim nguoi dung co email va mat khau trung khop
-      const user = users.find(
-        (u) =>
-          (u.email === email.trim() && u.password === password.trim()) ||
-          (u.username === username.trim() && u.password === password.trim())
-      );
+    //   //Tim nguoi dung co email va mat khau trung khop
+    //   const user = users.find(
+    //     (u) =>
+    //       (u.email === email.trim() && u.password === password.trim()) ||
+    //       (u.username === username.trim() && u.password === password.trim())
+    //   );
 
-      if (user) {
-        console.log("Login successful:", user);
-        //alert("Login successful");
-        navigation.navigate("Home", {
-          userId: user.id,
-          fullname: user.fullname,
-          username: user.username,
-          email: user.email,
-          phonenumber: user.phonenumber,
-          password: user.password,
-        });
-      } else {
-        alert("Invalid email or password");
-      }
-    } catch (error) {
-      console.log("Login error:", error);
-      alert("Login failed");
+    //   if (user) {
+    //     console.log("Login successful:", user);
+    //     //alert("Login successful");
+    //     navigation.navigate("AppNavigation"); 
+    //     setData({
+    //       userId: user.id,
+    //       fullname: user.fullname,
+    //       username: user.username,
+    //       email: user.email,
+    //       phonenumber: user.phonenumber,
+    //       password: user.password,
+    //     });
+    //   } else {
+    //     alert("Invalid email or password");
+    //   }
+    // } catch (error) {
+    //   console.log("Login error:", error);
+    //   alert("Login failed");
+    // }
+
+
+    if (password && password.trim()) {
+      user_login({
+        email: email,
+        password: password,
+      }).then((result) => {
+        if (result.status === 200) {
+          AsyncStorage.setItem("AccessToken", result.data.token);
+          navigation.navigate("AppNavigation");
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    } else {
+      alert(password);
     }
   };
 

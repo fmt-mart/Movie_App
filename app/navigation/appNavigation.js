@@ -3,8 +3,8 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
+import { useNavigation, useRoute } from "@react-navigation/native";
+import SplashScreen from "../screens/SplashScreen";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import HomeScreen from "../screens/HomeScreen";
@@ -15,71 +15,99 @@ import MovieScreen from "../screens/MovieScreen";
 import PersonScreen from "../screens/PersonScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import EditProfileScreen from "../screens/EditProfileScreen";
+import { AppProvider } from "../components/context";
 
+// SignStack Component - Quản lý đăng nhập và đăng ký
+const SignStack = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="SignIn"
+    >
+      <Stack.Screen name="SignIn" component={SignInScreen} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+      <Stack.Screen name="AppNavigation" component={AppNavigation} />
+    </Stack.Navigator>
+  );
+};
+
+// HomeStack Component - Quản lý các màn hình liên quan đến Home
 const HomeStack = () => {
   const Stack = createNativeStackNavigator();
-
   return (
-    <Stack.Navigator initialRouteName="SignIn">
-      <Stack.Screen
-        name="SignIn"
-        options={{ headerShown: false }}
-        component={SignInScreen}
-      />
-      <Stack.Screen
-        name="SignUp"
-        options={{ headerShown: false }}
-        component={SignUpScreen}
-      />
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="Home"
-        options={{ headerShown: false }}
         component={HomeScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Movie"
-        options={{ headerShown: false }}
         component={MovieScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Person"
-        options={{ headerShown: false }}
         component={PersonScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="SearchScreen"
-        options={{ headerShown: false }}
+        name="Search"
         component={SearchScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="UpcomingMovies"
-        options={{ headerShown: false }}
         component={UpcomingSeeAll}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="TopRatedMovies"
-        options={{ headerShown: false }}
         component={TopratedSeeAll}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
 };
 
+//ProfileStack Component - Quản lý các màn hình liên quan đến Profile
+const ProfileStack = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator initialRouteName="Profile">
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfileScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+// AppNavigation Component - Quản lý Navigation và Drawer
 const AppNavigation = () => {
   const Drawer = createDrawerNavigator();
   return (
-    <Drawer.Navigator
-      drawerContent={(props) => <CustomDrawerContent {...props} />}
-      screenOptions={{
-        drawerStyle: { backgroundColor: "black", width: 250 },
-        drawerLabelStyle: { color: "white" },
-        headerShown: false,
-      }}
-    >
-      <Drawer.Screen name="HomeStack" component={HomeStack} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
-    </Drawer.Navigator>
+    <AppProvider>
+      <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+        screenOptions={{
+          drawerStyle: { backgroundColor: "black", width: 250 },
+          drawerLabelStyle: { color: "white" },
+          headerShown: false,
+        }}
+      >
+        <Drawer.Screen name="Home" component={HomeStack} />
+        <Drawer.Screen name="Profile" component={ProfileStack} />
+        <Drawer.Screen name="SignIn" component={SignStack} />
+      </Drawer.Navigator>
+    </AppProvider>
   );
 };
 
@@ -87,7 +115,6 @@ const AppNavigation = () => {
 const CustomDrawerContent = (props) => {
   const styles = StyleSheet.create({
     drawerContainer: {
-      flex: 1,
       backgroundColor: "black",
       paddingVertical: 20,
       paddingHorizontal: 15,
@@ -122,7 +149,7 @@ const CustomDrawerContent = (props) => {
       <Text style={styles.headerText}>Menu</Text>
       <TouchableOpacity
         style={styles.drawerItem}
-        onPress={() => navigation.navigate("HomeStack")}
+        onPress={() => navigation.navigate("Home")}
       >
         <Ionicons name="home-outline" size={24} color="#ffffff" />
         <Text style={styles.drawerLabel}>Home</Text>
@@ -134,8 +161,15 @@ const CustomDrawerContent = (props) => {
         <Ionicons name="person-outline" size={24} color="#ffffff" />
         <Text style={styles.drawerLabel}>Profile</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.drawerItem}
+        onPress={() => navigation.navigate("SignIn")}
+      >
+        <Ionicons name="log-out-outline" size={24} color="#ffffff" />
+        <Text style={styles.drawerLabel}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default AppNavigation;
+export default SignStack;

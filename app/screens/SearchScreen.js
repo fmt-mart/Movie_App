@@ -79,7 +79,7 @@ export default SearchScreen = () => {
           }}
         ></TextInput>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("HomeStack", {screen: "Home"})}
           style={{
             backgroundColor: "gray",
             padding: 10,

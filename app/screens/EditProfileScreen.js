@@ -5,13 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Image,
 } from "react-native";
-import {
-  ChevronLeftIcon,
-  EyeIcon,
-  EyeSlashIcon,
-} from "react-native-heroicons/outline";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { useContext, useState } from "react";
 import { AppContext } from "../components/context";
 import { useNavigation } from "@react-navigation/native";
@@ -45,64 +40,66 @@ export default EditProfileScreen = () => {
     },
   });
 
-  const { data } = useContext(AppContext);
-  const { setData } = useContext(AppContext);
+  // const { data } = useContext(AppContext);
+  // const { setData } = useContext(AppContext);
   const navigation = useNavigation();
-  const [fullname, setFullname] = useState(data.fullname);
-  const [username, setUsername] = useState(data.username);
-  const [phonenumber, setPhonenumber] = useState(data.phonenumber);
-  const [email, setEmail] = useState(data.email);
-  const [password, setPassword] = useState(data.password);
+  // const [fullname, setFullname] = useState(data.fullname);
+  // const [username, setUsername] = useState(data.username);
+  // const [phonenumber, setPhonenumber] = useState(data.phonenumber);
+  // const [email, setEmail] = useState(data.email);
+  // const [password, setPassword] = useState(data.password);
 
-  useEffect(() => {
-    setFullname(data.fullname);
-    setUsername(data.username);
-    setPhonenumber(data.phonenumber);
-    setEmail(data.email);
-  }, [data]);
+  // useEffect(() => {
+  //   setFullname(data.fullname);
+  //   setUsername(data.username);
+  //   setPhonenumber(data.phonenumber);
+  //   setEmail(data.email);
+  // }, [data]);
 
-  const handleUpdate = async () => {
-    try {
-      // Update logic here
-      const response = await fetch(
-        `http://10.0.2.2:3000/users/${data.userId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: data.userId,
-            fullname: fullname,
-            username: username,
-            phonenumber: phonenumber,
-            email: email,
-            password: password,
-          }),
-        }
-      );
+  // const handleUpdate = async () => {
+  //   try {
+  //     // Update logic here
+  //     const response = await fetch(
+  //       `http://10.0.2.2:3000/users/${data.userId}`,
+  //       {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           id: data.userId,
+  //           fullname: fullname,
+  //           username: username,
+  //           phonenumber: phonenumber,
+  //           email: email,
+  //           password: password,
+  //         }),
+  //       }
+  //     );
 
-      if (response.ok) {
-        const data_new = await response.json();
-        console.log("Update successful:", data_new);
-        alert("Update successful");
-        setData(data_new);
-        navigation.navigate("Profile", data_new);
-      } else {
-        const errorData = await response.json();
-        alert(errorData.message || "Invalid login credentials");
-      }
-    } catch (error) {
-      console.log("Update error:", error);
-      alert("Update failed");
-    }
-  };
+  //     if (response.ok) {
+  //       const data_new = await response.json();
+  //       console.log("Update successful:", data_new);
+  //       alert("Update successful");
+  //       setData(data_new);
+  //       navigation.navigate("Profile", data_new);
+  //     } else {
+  //       const errorData = await response.json();
+  //       alert(errorData.message || "Invalid login credentials");
+  //     }
+  //   } catch (error) {
+  //     console.log("Update error:", error);
+  //     alert("Update failed");
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <View style={styles.backButton}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Profile", data)}
+          onPress={() =>
+            navigation.navigate("Profile")
+          }
         >
           <ChevronLeftIcon color="white" size={24} />
         </TouchableOpacity>
@@ -129,9 +126,10 @@ export default EditProfileScreen = () => {
             padding: 10,
             borderBottomWidth: 3,
           }}
-          value={fullname}
+          //value={fullname}
+          //onChangeText={setFullname}
           placeholderTextColor={"lightgray"}
-          onChangeText={setFullname}
+          placeholder="Fullname"
         ></TextInput>
 
         <TextInput
@@ -145,9 +143,10 @@ export default EditProfileScreen = () => {
             borderBottomWidth: 3,
             marginTop: 20,
           }}
-          value={username}
-          onChangeText={setUsername}
+          //value={username}
+          //onChangeText={setUsername}
           placeholderTextColor={"lightgray"}
+          placeholder="Username"
         ></TextInput>
 
         <TextInput
@@ -161,8 +160,9 @@ export default EditProfileScreen = () => {
             borderBottomWidth: 3,
             marginTop: 20,
           }}
-          value={phonenumber}
-          onChangeText={setPhonenumber}
+          //value={phonenumber}
+          //onChangeText={setPhonenumber}
+          placeholder="Phone Number"
           placeholderTextColor={"lightgray"}
         ></TextInput>
 
@@ -178,11 +178,11 @@ export default EditProfileScreen = () => {
             marginTop: 20,
           }}
         >
-          {data.email}
+          minhnhat6403@gmail.com
         </Text>
 
         <TouchableOpacity
-          onPress={handleUpdate}
+          //onPress={handleUpdate}
           style={{
             backgroundColor: "#eab308",
             padding: 10,

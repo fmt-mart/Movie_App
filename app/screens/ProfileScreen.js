@@ -10,7 +10,6 @@ import {
 } from "react-native-heroicons/outline";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { fetchUser } from "../api/moviedb";
 import { useContext } from "react";
 import { AppContext } from "../components/context";
 
@@ -18,22 +17,22 @@ export default function ProfileScreen() {
   //const [user, setUser] = useState({});
   const navigation = useNavigation();
   //const route = useRoute();
-  const { data } = useContext(AppContext);
-  const [fullname, setFullname] = useState(data.fullname);
-  const [username, setUsername] = useState(data.username);
-  const [phonenumber, setPhonenumber] = useState(data.phonenumber);
-  const [email, setEmail] = useState(data.email);
+  // const { data } = useContext(AppContext);
+  // const [fullname, setFullname] = useState(data.fullname);
+  // const [username, setUsername] = useState(data.username);
+  // const [phonenumber, setPhonenumber] = useState(data.phonenumber);
+  // const [email, setEmail] = useState(data.email);
 
 
-  useEffect(() => {
-    setFullname(data.fullname);
-    setUsername(data.username);
-    setPhonenumber(data.phonenumber);
-    setEmail(data.email);
-  }, [data]);
+  // useEffect(() => {
+  //   setFullname(data.fullname);
+  //   setUsername(data.username);
+  //   setPhonenumber(data.phonenumber);
+  //   setEmail(data.email);
+  // }, [data]);
 
   const handleEditProfile = () => {
-    navigation.navigate("EditProfile", data);
+    navigation.navigate("EditProfile");
   };
 
   const styles = StyleSheet.create({
@@ -87,9 +86,9 @@ export default function ProfileScreen() {
 
         <View>
           <Text style={{ fontSize: 30, fontWeight: "bold", color: "white" }}>
-            {fullname}
+            Minh Nhat
           </Text>
-          <Text style={{ fontSize: 15, color: "gray" }}>@{username}</Text>
+          <Text style={{ fontSize: 15, color: "gray" }}>@minhnhat</Text>
         </View>
       </View>
 
@@ -103,7 +102,7 @@ export default function ProfileScreen() {
             marginLeft: 20,
           }}
         >
-          {phonenumber}
+          0915248443
         </Text>
       </View>
 
@@ -119,7 +118,7 @@ export default function ProfileScreen() {
             marginLeft: 20,
           }}
         >
-          {email}
+          minhnhat6403@gmail.com
         </Text>
       </View>
       <View

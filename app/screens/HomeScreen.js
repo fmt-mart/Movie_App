@@ -24,6 +24,7 @@ import { AppContext } from "../components/context";
 // const android = Platform.OS === "android";
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "black",
     width: "100%",
     height: "100%",
@@ -79,17 +80,21 @@ const HomeScreen = () => {
     setLoading(false);
   };
 
-  const { setData } = useContext(AppContext);
   const handleDrawer = () => {
-    setData({
-      userId: user.userId,
-      fullname: user.fullname,
-      username: user.username,
-      email: user.email,
-      phonenumber: user.phonenumber,
-      password: user.password,
-    });
-    // Open the drawer
+    // if (user && user.userId) {
+    //   setData({
+    //     userId: user.userId,
+    //     fullname: user.fullname,
+    //     username: user.username,
+    //     email: user.email,
+    //     phonenumber: user.phonenumber,
+    //     password: user.password,
+    //   });
+     
+    // } else {
+    //   console.error("User data is not available for drawer.");
+    // }
+
     navigation.openDrawer();
     console.log(user);
   };
@@ -118,7 +123,7 @@ const HomeScreen = () => {
             size={30}
             strokeWidth={2}
             color="white"
-            onPress={() => navigation.navigate("Search")}
+            onPress={() => navigation.navigate("HomeStack", { screen: "Search" })}
           />
         </TouchableOpacity>
       </View>
